@@ -12,7 +12,16 @@ public class buyLowSellHigh {
 	
 	public String bestDays()
 	{
-		Float max_diff = currentPrices.get(1) - currentPrices.get(0); 
+		if (currentPrices.isEmpty())
+		{
+			return ("Empty List");
+		}
+		if (currentPrices.size() < 2)
+		{
+			return ("Dataset too small");
+		}
+		 
+		Float max_diff = 0.0f;
         int sellIndex = 0;
         int buyIndex = 0;
         int newBuyIndex = 0;
@@ -31,6 +40,10 @@ public class buyLowSellHigh {
             	buyPrice = currentPrices.get(i);
             	newBuyIndex = i;
             }
+        }
+        if (buyIndex == sellIndex)
+        {
+        	return "Hold onto shares longer";
         }
         return dayPrice(buyIndex) +","+ dayPrice(sellIndex);
 	}
