@@ -1,3 +1,4 @@
+/*
 public class Main
 {
 	public static void main(String[] args)
@@ -7,7 +8,8 @@ public class Main
 		//process prices to determine day to buy and day to sell
 		//display
 		//LEGACY
-		/*pricesFileHandler fReader = new pricesFileHandler();
+		*/
+/*pricesFileHandler fReader = new pricesFileHandler();
 		//set 1
 		System.out.println("SET 1");
 		Float[] prices = fReader.getPricesFromFile("ChallengeSampleDataSet1.txt");
@@ -17,6 +19,7 @@ public class Main
 		System.out.println("\nSET 2");
 		Float[] prices2 = fReader.getPricesFromFile("ChallengeSampleDataSet2.txt");
 		buyLowSellHigh set2 = new buyLowSellHigh(prices2);
-		System.out.println(set2.bestDays());*/
+		System.out.println(set2.bestDays());*//*
+
 	}
-}
+}*/
