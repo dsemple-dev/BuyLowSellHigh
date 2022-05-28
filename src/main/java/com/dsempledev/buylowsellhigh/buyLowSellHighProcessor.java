@@ -1,14 +1,14 @@
-/*
-import java.util.Arrays;
-import java.util.List;
+package com.dsempledev.buylowsellhigh;
 
-public class buyLowSellHigh {
+import java.util.ArrayList;
+
+public class buyLowSellHighProcessor {
 	
-	private List<Float> currentPrices;
+	private ArrayList<Float> currentPrices;
 	
-	public buyLowSellHigh(Float[] priceArray)
+	public buyLowSellHighProcessor(ArrayList<Float> priceArray)
 	{
-        currentPrices = Arrays.asList(priceArray); 
+        currentPrices = priceArray;
 	}
 	
 	public String bestDays()
@@ -54,4 +54,4 @@ public class buyLowSellHigh {
 		return String.valueOf(dayIndex+1) +"("+ currentPrices.get(dayIndex).toString()+")";
 	}
 }
-*/
+
