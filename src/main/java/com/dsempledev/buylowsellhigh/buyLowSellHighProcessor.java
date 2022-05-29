@@ -1,25 +1,57 @@
 package com.dsempledev.buylowsellhigh;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 
 public class buyLowSellHighProcessor {
-	
+
+	private static final Logger logger = LogManager.getLogger(buyLowSellHighApplication.class);
 	private ArrayList<Float> currentPrices;
+	private String theBestTrade;
 	
 	public buyLowSellHighProcessor(ArrayList<Float> priceArray)
 	{
         currentPrices = priceArray;
 	}
-	
-	public String bestDays()
+
+	public void matriceTest() // remove before PROD
+	{
+		Float[][] theMatrix = new Float[currentPrices.size()][currentPrices.size()];
+		int bestX = 0;
+		int bestY = 1;
+		float bestTrade = 0;
+		for (int x = 0; x < currentPrices.size(); x++)
+		{
+			for (int y = x + 1; y < currentPrices.size(); y++)
+			{
+				if (currentPrices.get(y) < currentPrices.get(x))
+				{
+					//theMatrix[x][y] = -1f;
+				}
+				else {
+					theMatrix[x][y] = (currentPrices.get(y) - currentPrices.get(x));
+					if (theMatrix[x][y] > bestTrade) {
+						bestTrade = theMatrix[x][y];
+						bestX = x;
+						bestY = y;
+					}
+				}
+			}
+		}
+		logger.info(dayPrice(bestX) + dayPrice(bestY));
+	}
+
+	private void processTrades()
 	{
 		if (currentPrices.isEmpty())
 		{
-			return ("Empty List");
+			theBestTrade = ("The price list is empty.");
 		}
 		if (currentPrices.size() < 2)
 		{
-			return ("Dataset too small");
+			theBestTrade = ("Dataset too small");
 		}
 		 
 		Float max_diff = 0.0f;
@@ -44,14 +76,29 @@ public class buyLowSellHighProcessor {
         }
         if (buyIndex == sellIndex)
         {
-        	return "Hold onto shares longer";
+			theBestTrade = ("Hold onto shares longer");
         }
-        return dayPrice(buyIndex) +","+ dayPrice(sellIndex);
+		setBestTradeOutputFormat(buyIndex,sellIndex);
 	}
 	
 	private String dayPrice(int dayIndex)
 	{
 		return String.valueOf(dayIndex+1) +"("+ currentPrices.get(dayIndex).toString()+")";
+	}
+
+	private void setBestTradeOutputFormat(int buyIndex, int sellIndex)
+	{
+		theBestTrade =  dayPrice(buyIndex) +","+ dayPrice(sellIndex);
+	}
+
+	public String getTheBestTrade()
+	{
+		if (theBestTrade == null) // use string utils to check this
+		{
+			processTrades();
+		}
+
+		return theBestTrade != null ? theBestTrade : "ERROR in processing";
 	}
 }
 
