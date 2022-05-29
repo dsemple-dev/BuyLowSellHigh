@@ -1,9 +1,13 @@
 package com.dsempledev.buylowsellhigh;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.util.ArrayList;
 
 public class buyLowSellHighProcessor {
-	
+
+	private static final Logger logger = LogManager.getLogger(buyLowSellHighApplication.class);
 	private ArrayList<Float> currentPrices;
 	private String theBestTrade;
 	
@@ -36,7 +40,7 @@ public class buyLowSellHighProcessor {
 				}
 			}
 		}
-		System.out.println(dayPrice(bestX) + dayPrice(bestY));
+		logger.info(dayPrice(bestX) + dayPrice(bestY));
 	}
 
 	private void processTrades()
