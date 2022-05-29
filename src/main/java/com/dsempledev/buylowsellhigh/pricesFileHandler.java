@@ -1,5 +1,8 @@
 package com.dsempledev.buylowsellhigh;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import java.io.FileReader;
 import java.io.StreamTokenizer;
 
@@ -7,6 +10,7 @@ import java.util.ArrayList;
 
 public class pricesFileHandler {
 
+	private static final Logger logger = LogManager.getLogger(buyLowSellHighApplication.class);
 	private ArrayList<Float> sharePriceList;
 	
 	public pricesFileHandler()
@@ -29,17 +33,17 @@ public class pricesFileHandler {
 					}
 					else
 					{
-						System.out.println("Not a valid share price: "+st.sval);
-						System.out.println("Must be greater than zero.");
+						logger.error("Not a valid share price: "+st.sval);
+						logger.error("Must be greater than zero.");
 					}
 				} else if(st.ttype == StreamTokenizer.TT_EOF) {
-					System.out.println("All prices read in from file.");
+					logger.debug("All prices read in from file.");
 				}
 				else if(st.ttype == StreamTokenizer.TT_WORD) {
-					System.out.println("Not a valid share price: "+st.sval);
+					logger.error("Not a valid share price: "+st.sval);
 				}
 				else {
-					System.out.println("Not a valid share price: "+(char)token);
+					logger.error("Not a valid share price: "+(char)token);
 				}
 			}
 		} catch (Exception e) {

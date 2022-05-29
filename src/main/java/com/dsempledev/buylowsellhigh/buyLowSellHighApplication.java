@@ -13,9 +13,9 @@ import java.util.ArrayList;
 @SpringBootApplication
 public class buyLowSellHighApplication {
 
+    private static final Logger logger = LogManager.getLogger(buyLowSellHighApplication.class);
     private final String FILE1 = "src/main/resources/ChallengeSampleDataSet1.txt";
     private final String FILE2 = "src/main/resources/ChallengeSampleDataSet2.txt";
-    private static final Logger logger = LogManager.getLogger(buyLowSellHighApplication.class);
 
     public static void main(String[] args)
     {
@@ -35,20 +35,18 @@ public class buyLowSellHighApplication {
 
             pricesFileHandler fReader = new pricesFileHandler();
 
-            //logging test
-            logger.debug("Debugging log");
-            logger.info("Info log");
-            logger.warn("Hey, This is a warning!");
-            logger.error("Oops! We have an Error. OK");
-            logger.fatal("Damn! Fatal error. Please fix me.");
-
             //TO DO
-            //add logging
-            //set logging to info for prod
             //add debug log messages
             //configure logging to a file
             //pull repeated sections for each set below into a method
             //consider and annotate SOLID "this is the S..."
+
+            //logging test
+            //logger.debug("Debugging log");
+            //logger.info("Info log");
+            //logger.warn("Hey, This is a warning!");
+            //logger.error("Oops! We have an Error. OK");
+            //logger.fatal("Damn! Fatal error. Please fix me.");
 
             logger.info("SET 1");
             ArrayList<Float> thePrices = fReader.readWithStreamTokenizer(FILE1);
