@@ -18,33 +18,6 @@ public class buyLowSellHighProcessor {
 		processTrades();
 	}
 
-	public void matriceTest() // remove before PROD
-	{
-		Float[][] theMatrix = new Float[currentPrices.size()][currentPrices.size()];
-		int bestX = 0;
-		int bestY = 1;
-		float bestTrade = 0;
-		for (int x = 0; x < currentPrices.size(); x++)
-		{
-			for (int y = x + 1; y < currentPrices.size(); y++)
-			{
-				if (currentPrices.get(y) < currentPrices.get(x))
-				{
-					//theMatrix[x][y] = -1f;
-				}
-				else {
-					theMatrix[x][y] = (currentPrices.get(y) - currentPrices.get(x));
-					if (theMatrix[x][y] > bestTrade) {
-						bestTrade = theMatrix[x][y];
-						bestX = x;
-						bestY = y;
-					}
-				}
-			}
-		}
-		logger.info(dayPrice(bestX) + dayPrice(bestY));
-	}
-
 	private void processTrades()
 	{
 		logger.debug("Processing Trades");
@@ -61,22 +34,26 @@ public class buyLowSellHighProcessor {
 		 
 		Float max_diff = 0.0f;
         int sellIndex = 0;
+		//two buy indexes incase lowest price does not give biggest difference in price
         int buyIndex = 0;
         int newBuyIndex = 0;
         Float buyPrice = currentPrices.get(buyIndex);
         int i;
+		logger.debug("Looping through all share prices.");
         for (i = 1; i < currentPrices.size(); i++)
         {
-            if (currentPrices.get(i) - buyPrice > max_diff)
+            if ((currentPrices.get(i) - buyPrice) > max_diff)
             {
                 max_diff = currentPrices.get(i) - buyPrice;
-                sellIndex = i;
-                buyIndex = newBuyIndex;
+                sellIndex = i; //set day to sell to current day
+                buyIndex = newBuyIndex; //set day to buy to lowest previous value
+				logger.debug("New best trade identified.");
             }
-            if (currentPrices.get(i) < buyPrice)
+            if (currentPrices.get(i) < buyPrice)//check if today is lowest price
             {
-            	buyPrice = currentPrices.get(i);
-            	newBuyIndex = i;
+            	buyPrice = currentPrices.get(i); //price to buy at set to today's value
+            	newBuyIndex = i; //store todays index
+				logger.debug("New day to purchase shares identified.");
             }
         }
         if (buyIndex == sellIndex)
@@ -101,6 +78,7 @@ public class buyLowSellHighProcessor {
 	{
 		if (theBestTrade == null) // use string utils to check this
 		{
+			logger.debug("Reprocessing file.  ");
 			processTrades();
 		}
 

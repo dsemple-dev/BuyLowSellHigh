@@ -57,8 +57,9 @@ public class buyLowSellHighApplication {
         logger.debug("PROCESSING: "+fName);
         pricesFileHandler fReader = new pricesFileHandler();
         ArrayList<Float> thePrices = fReader.readWithStreamTokenizer(fName);
+        logger.debug("Prices read in from file.");
         buyLowSellHighProcessor shareSet = new buyLowSellHighProcessor(thePrices);
-        //shareSet.matriceTest();
+        logger.debug("Shares processed and best trade identified.");
         logger.info(shareSet.getTheBestTrade());
     }
 }
