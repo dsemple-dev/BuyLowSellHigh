@@ -33,12 +33,14 @@ public class buyLowSellHighApplication {
     public CommandLineRunner commandLineRunner(ApplicationContext ctx) {
         return args -> {
 
-            pricesFileHandler fReader = new pricesFileHandler();
+            process(FILE1);
+            process(FILE2);
 
             //TO DO
             //add debug log messages
             //configure logging to a file
-            //pull repeated sections for each set below into a method
+            //deal with git conflicts with target
+            //Make processor a factory method?
             //consider and annotate SOLID "this is the S..."
 
             //logging test
@@ -48,17 +50,15 @@ public class buyLowSellHighApplication {
             //logger.error("Oops! We have an Error. OK");
             //logger.fatal("Damn! Fatal error. Please fix me.");
 
-            logger.info("SET 1");
-            ArrayList<Float> thePrices = fReader.readWithStreamTokenizer(FILE1);
-            buyLowSellHighProcessor set1 = new buyLowSellHighProcessor(thePrices);
-            //set1.matriceTest();
-            logger.info(set1.getTheBestTrade());
-
-            logger.info("SET 2");
-            thePrices = fReader.readWithStreamTokenizer(FILE2);
-            buyLowSellHighProcessor set2 = new buyLowSellHighProcessor(thePrices);
-            //set2.matriceTest();
-            logger.info(set2.getTheBestTrade());
         };
+    }
+
+    private void process(String fName){
+        logger.debug("PROCESSING: "+fName);
+        pricesFileHandler fReader = new pricesFileHandler();
+        ArrayList<Float> thePrices = fReader.readWithStreamTokenizer(fName);
+        buyLowSellHighProcessor shareSet = new buyLowSellHighProcessor(thePrices);
+        //shareSet.matriceTest();
+        logger.info(shareSet.getTheBestTrade());
     }
 }

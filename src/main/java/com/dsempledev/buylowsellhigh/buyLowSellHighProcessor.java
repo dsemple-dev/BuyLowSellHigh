@@ -13,7 +13,9 @@ public class buyLowSellHighProcessor {
 	
 	public buyLowSellHighProcessor(ArrayList<Float> priceArray)
 	{
+		logger.debug("buyLowSellHigh Processor created");
         currentPrices = priceArray;
+		processTrades();
 	}
 
 	public void matriceTest() // remove before PROD
@@ -45,13 +47,16 @@ public class buyLowSellHighProcessor {
 
 	private void processTrades()
 	{
+		logger.debug("Processing Trades");
 		if (currentPrices.isEmpty())
 		{
 			theBestTrade = ("The price list is empty.");
+			logger.error("The price list is empty.");
 		}
 		if (currentPrices.size() < 2)
 		{
 			theBestTrade = ("Dataset too small");
+			logger.error("Dataset too small");
 		}
 		 
 		Float max_diff = 0.0f;
@@ -77,6 +82,7 @@ public class buyLowSellHighProcessor {
         if (buyIndex == sellIndex)
         {
 			theBestTrade = ("Hold onto shares longer");
+			logger.error("No valid trade to make.  Hold onto shares longer.  ");
         }
 		setBestTradeOutputFormat(buyIndex,sellIndex);
 	}
